@@ -20,7 +20,7 @@ import {
 import { PolicyStatement, Role, ServicePrincipal } from '@aws-cdk/aws-iam'
 import { DockerImageAsset } from '@aws-cdk/assets-docker'
 
-interface StaticProps extends StackProps {
+export interface StaticJekyllSiteProps extends StackProps {
   slug: string
   tld: string
   subdomain: string
@@ -31,8 +31,8 @@ interface StaticProps extends StackProps {
   image: DockerImageAsset
 }
 
-export class StaticSite extends Construct {
-  constructor(scope: Construct, id: string, props: StaticProps) {
+export class StaticJekyllSite extends Construct {
+  constructor(scope: Construct, id: string, props: StaticJekyllSiteProps) {
     super(scope, id)
 
     const slug = props.slug

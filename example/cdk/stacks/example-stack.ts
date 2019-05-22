@@ -1,5 +1,5 @@
 import { App, Stack, StackProps } from '@aws-cdk/cdk'
-import { StaticSite } from '../../../src/resource/static-site'
+import { StaticJekyllSite } from '../../../src/resource/static-site'
 import { DockerImageAsset } from '@aws-cdk/assets-docker'
 
 const slug = 'static-example'
@@ -13,7 +13,7 @@ export class ExampleStack extends Stack {
       repositoryName: slug
     })
 
-    new StaticSite(this, 'example-site', {
+    new StaticJekyllSite(this, 'example-site', {
       slug: slug,
       tld: 'mobileposse.com',
       subdomain: 'example.mobileposse.com',

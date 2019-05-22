@@ -22,7 +22,7 @@ npm add static-jekyll-site
 And then require the construct and use it in your stack like any standard CDK resource!
 
 ```typescript
-import { StaticSite } from 'static-jekyll-site'
+import { StaticJekyllSite } from 'static-jekyll-site'
 
 export class ExampleStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
@@ -33,7 +33,7 @@ export class ExampleStack extends Stack {
       repositoryName: slug
     })
 
-    new StaticSite(this, 'example-site', {
+    new StaticJekyllSite(this, 'example-site', {
       slug: slug,
       tld: 'mobileposse.com',
       subdomain: 'example.mobileposse.com',
