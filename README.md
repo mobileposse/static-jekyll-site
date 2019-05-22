@@ -72,6 +72,7 @@ npm adduser
 Push the release (you will be asked the new version)
 
 ```
+yarn compile
 yarn publish
 ```
 
