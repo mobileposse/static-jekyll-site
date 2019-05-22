@@ -1,6 +1,13 @@
 ## What it does
 
-Creates an S3 bucket in Cloud Formation that will automatically be emptied **before** the bucket is destroyed by Cloud Formation.
+Creates an a static [Jekyll](https://jekyllrb.com/) website running on AWS Fargate. The website is automatically rebuilt and redeployed when changes are pushed to Github courtesy of [AWS Code Pipeline](https://aws.amazon.com/codepipeline/).
+
+## Assumptions
+
+- You are building the site using [Jekyll](https://jekyllrb.com/).
+- You are hosting the site on a subdomain
+- Website will be public (IP restrictions coming soon!)
+- Website can be built using a Docker image that is supplied to the component
 
 ## How to use it
 
@@ -9,56 +16,50 @@ This is an [AWS CDK Construct](https://docs.aws.amazon.com/CDK/latest/userguide/
 Just install with npm:
 
 ```
-npm add auto-delete-bucket
+npm add static-jekyll-site
 ```
 
 And then require the construct and use it in your stack like any standard CDK resource!
 
-```js
-import { AutoDeleteBucket } from 'auto-delete-bucket'
+```typescript
+import { StaticSite } from 'static-jekyll-site'
 
 export class ExampleStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
     super(scope, id, props)
 
-    /**
-     * NOTE: S3 requires bucket names to be globally unique across accounts so
-     * you will need to change the bucketName to something that nobody else is
-     * using.
-     */
-    new AutoDeleteBucket(this, 'example-autobucket-1', {
-      bucketName: 'autoexample-bucket1'
+    const image = new DockerImageAsset(this, `${slug}-image`, {
+      directory: './example/docs',
+      repositoryName: slug
+    })
+
+    new StaticSite(this, 'example-site', {
+      slug: slug,
+      tld: 'mobileposse.com',
+      subdomain: 'example.mobileposse.com',
+      zoneid: 'ZXK70TKQ5GQBE',
+      ssl: '[certificate-arn]',
+      repo: 'static-site',
+      branch: 'master',
+      image: image
     })
   }
 }
 ```
 
-See the example directory for a complete CDK example. Be sure to change the `bucketNames` so they are unique.
-
-The bucket can be configured with any of the [standard CDK Bucket Properties](https://awslabs.github.io/aws-cdk/refs/_aws-cdk_aws-s3.html#bucketprops-interface).
+See the `example` directory for a functional example.
 
 ## Requirements
 
-- This is designed to work with AWS CDK but feel free to borrow the code if you want to create the custom CF resource some other way.
-- Does not yet work with versioned buckets but it can be easily adapted to do so (pull requests welcome.)
+- This is designed to work with AWS CDK but feel free to borrow/moidfy the code to suit your purpose.
 
 ## Motivation
 
-Cloud Formation will often fail to actually delete your S3 Bucket resources when you destroy your stack. This happens whenever the bucket is not empty as the Cloud Formation documentation clearly states:
-
-> You can only delete empty buckets. Deletion fails for buckets that have contents.
-
-We find that in most of our use cases, we want to automatically delete the bucket and it's contents whenever the stack is deleted. Otherwise you will have a bunch of orphaned buckets to clean up manualy. The problem is even worse when you need to explicitly name the bucket (ex. for a website), because you won't be able to recreate the stack due to the fact that a bucket already exists with that name.
+We have several internal and external sites that all need to be updated automatically on a continual basis. We also make small changes to the underlying infrastructure and also to keep up with the latest CDK version and it's tedious making these changes in multiple projects/branches. A single CDK component to do everything seemed ideal.
 
 ## How it Works
 
-Create a [custom resource](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) that will automatically delete your bucket contents before attempting bucket deletion.
-
-## Running Tests
-
-```
-yarn test
-```
+This is actually a relatively simple use of CDK Constructs. There are no custom resources involved, just a single, reusable Construct that can be shared across proejcts.
 
 ## Publish to NPM (Official maintainers only)
 
@@ -79,7 +80,3 @@ Push the tagged source back up to Github
 ```
 git push --tags
 ```
-
-## More Information
-
-See the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/dev/delete-or-empty-bucket.html) for more information on S3 and deleting bucket contents.
