@@ -72,7 +72,7 @@ npm adduser
 Push the release (you will be asked the new version)
 
 ```
-npm publish
+yarn publish
 ```
 
 Push the tagged source back up to Github
