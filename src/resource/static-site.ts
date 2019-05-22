@@ -70,13 +70,6 @@ export class StaticJekyllSite extends Construct {
       domainZone: zone
     })
 
-    // new CnameRecord(this, 'Record', {
-    //   recordName: subdomain,
-    //   recordValue: fargate.loadBalancer.dnsName,
-    //   ttl: 60,
-    //   zone
-    // })
-
     const sourceOutput = new Artifact('SourceOutput')
     const oauthSecret = Secret.fromSecretAttributes(this, 'github-token', {
       secretArn:
