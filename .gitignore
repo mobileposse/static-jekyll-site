@@ -3,6 +3,7 @@
 cdk/node_modules
 cdk/**/*.js
 cdk/**/*.d.ts
+.cdk.staging
 
 src/resource/*.js
 src/resource/*.d.ts
