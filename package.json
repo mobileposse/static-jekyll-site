@@ -1,0 +1,69 @@
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "description": "CDK Construct for generating a static site that can be updated automatically by AWS Code Pipeline",
+  "main": "dist/src/resource/static-site.js",
+  "types": "dist/src/resource/static-site.d.ts",
+  "keywords": [
+    "aws",
+    "static",
+    "website",
+    "fargate",
+    "cloudformation",
+    "cdk",
+    "construct"
+  ],
+  "homepage": "https://github.com/mobileposse/static-site",
+  "scripts": {
+    "bump:patch": "npm version patch -m 'Bump version'",
+    "bump:minor": "npm version minor -m 'Bump version'",
+    "bump:major": "npm version major -m 'Bump version'",
+    "compile": "yarn tsc",
+    "cdk": "yarn compile && cdk",
+    "cdk:list": "yarn compile && cdk list",
+    "cdk:synth": "yarn compile && cdk synth",
+    "cdk:deploy": "yarn compile && cdk deploy",
+    "cdk:destroy": "yarn compile && cdk destroy",
+    "cdk:version": "yarn compile && cdk --version"
+  },
+  "author": "Sean Schofield",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mobileposse/static-site"
+  },
+  "dependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/uuid": "^3.4.4",
+    "aws-sdk": "^2.437.0",
+    "axios": "^0.18.0"
+  },
+  "peerDependencies": {
+    "@aws-cdk/assets-docker": "0.31.0",
+    "@aws-cdk/aws-certificatemanager": "0.31.0",
+    "@aws-cdk/aws-cloudfront": "0.31.0",
+    "@aws-cdk/aws-codebuild": "0.31.0",
+    "@aws-cdk/aws-codepipeline": "0.31.0",
+    "@aws-cdk/aws-codepipeline-actions": "0.31.0",
+    "@aws-cdk/aws-ec2": "0.31.0",
+    "@aws-cdk/aws-ecs": "0.31.0",
+    "@aws-cdk/aws-elasticloadbalancingv2": "0.31.0",
+    "@aws-cdk/aws-iam": "0.31.0",
+    "@aws-cdk/aws-lambda": "0.31.0",
+    "@aws-cdk/aws-route53": "0.31.0",
+    "@aws-cdk/aws-s3": "0.31.0",
+    "@aws-cdk/aws-secretsmanager": "0.31.0",
+    "@aws-cdk/cdk": "0.31.0"
+  },
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^11.12.2",
+    "aws-cdk": "^0.31.0",
+    "jest": "^24.6.0",
+    "typescript": "^3.4.2"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}
