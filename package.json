@@ -1,5 +1,5 @@
 {
-  "name": "static-site",
+  "name": "static-jekyll-site",
   "version": "1.0.0",
   "description": "CDK Construct for generating a static site that can be updated automatically by AWS Code Pipeline",
   "main": "dist/src/resource/static-site.js",
@@ -13,7 +13,7 @@
     "cdk",
     "construct"
   ],
-  "homepage": "https://github.com/mobileposse/static-site",
+  "homepage": "https://github.com/mobileposse/static-jekyll-site",
   "scripts": {
     "bump:patch": "npm version patch -m 'Bump version'",
     "bump:minor": "npm version minor -m 'Bump version'",
@@ -30,7 +30,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mobileposse/static-site"
+    "url": "https://github.com/mobileposse/static-jekyll-site"
   },
   "dependencies": {
     "@types/jest": "^24.0.11",
