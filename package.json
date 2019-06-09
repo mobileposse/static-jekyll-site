@@ -1,6 +1,6 @@
 {
   "name": "static-jekyll-site",
-  "version": "1.0.6",
+  "version": "1.0.11",
   "description": "CDK Construct for generating a static site that can be updated automatically by AWS Code Pipeline",
   "main": "dist/src/resource/static-site.js",
   "types": "dist/src/resource/static-site.d.ts",
@@ -24,8 +24,7 @@
     "cdk:synth": "yarn compile && cdk synth",
     "cdk:deploy": "yarn compile && cdk deploy",
     "cdk:destroy": "yarn compile && cdk destroy",
-    "cdk:version": "yarn compile && cdk --version",
-    "publish": "yarn compile && npm publish"
+    "cdk:version": "yarn compile && cdk --version"
   },
   "author": "Sean Schofield",
   "license": "MIT",
