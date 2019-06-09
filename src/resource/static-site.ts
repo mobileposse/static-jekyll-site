@@ -11,12 +11,9 @@ import {
 } from '@aws-cdk/aws-codepipeline-actions'
 import { LinuxBuildImage, PipelineProject } from '@aws-cdk/aws-codebuild'
 import { Secret } from '@aws-cdk/aws-secretsmanager'
-import { VpcNetwork } from '@aws-cdk/aws-ec2'
-import {
-  Cluster,
-  ContainerImage,
-  LoadBalancedFargateService
-} from '@aws-cdk/aws-ecs'
+import { Vpc } from '@aws-cdk/aws-ec2'
+import { Cluster, ContainerImage } from '@aws-cdk/aws-ecs'
+import { LoadBalancedFargateService } from '@aws-cdk/aws-ecs-patterns'
 import { PolicyStatement, Role, ServicePrincipal } from '@aws-cdk/aws-iam'
 import { DockerImageAsset } from '@aws-cdk/assets-docker'
 
@@ -39,7 +36,7 @@ export class StaticJekyllSite extends Construct {
     // const subdomain = props.subdomain
     const image = props.image
 
-    const vpc = new VpcNetwork(this, `${slug}-vpc`, {
+    const vpc = new Vpc(this, `${slug}-vpc`, {
       maxAZs: 2 // Default is all AZs in region
     })
 

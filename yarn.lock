@@ -208,6 +208,24 @@
     "@aws-cdk/aws-iam" "^0.33.0"
     "@aws-cdk/cdk" "^0.33.0"
 
+"@aws-cdk/aws-ecs-patterns@0.33.0":
+  version "0.33.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-ecs-patterns/-/aws-ecs-patterns-0.33.0.tgz#83a6ea4100a6951dc3cc58a329cbd9887bae78ed"
+  integrity sha512-w44avkLsor7YZUS8hkhtJ1Wb5Zw3hhkBdCzUWNo75hl3yj5yCoUMPBXI2V++E85qfBiPbs7hgVl+6T1pzaE7lg==
+  dependencies:
+    "@aws-cdk/aws-applicationautoscaling" "^0.33.0"
+    "@aws-cdk/aws-certificatemanager" "^0.33.0"
+    "@aws-cdk/aws-ec2" "^0.33.0"
+    "@aws-cdk/aws-ecs" "^0.33.0"
+    "@aws-cdk/aws-elasticloadbalancingv2" "^0.33.0"
+    "@aws-cdk/aws-events" "^0.33.0"
+    "@aws-cdk/aws-events-targets" "^0.33.0"
+    "@aws-cdk/aws-iam" "^0.33.0"
+    "@aws-cdk/aws-route53" "^0.33.0"
+    "@aws-cdk/aws-route53-targets" "^0.33.0"
+    "@aws-cdk/aws-sqs" "^0.33.0"
+    "@aws-cdk/cdk" "^0.33.0"
+
 "@aws-cdk/aws-ecs@0.33.0", "@aws-cdk/aws-ecs@^0.33.0":
   version "0.33.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-ecs/-/aws-ecs-0.33.0.tgz#a89d1aee8210d37fdf1ea417811df0609ce49cea"
