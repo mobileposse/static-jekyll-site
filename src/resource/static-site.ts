@@ -1,4 +1,4 @@
-import { Construct, StackProps } from '@aws-cdk/cdk'
+import { Construct, StackProps } from '@aws-cdk/core'
 import { HostedZone } from '@aws-cdk/aws-route53'
 import { Certificate } from '@aws-cdk/aws-certificatemanager'
 import { AutoDeleteBucket } from 'auto-delete-bucket'
@@ -9,13 +9,17 @@ import {
   EcsDeployAction,
   GitHubTrigger
 } from '@aws-cdk/aws-codepipeline-actions'
-import { LinuxBuildImage, PipelineProject } from '@aws-cdk/aws-codebuild'
+import {
+  BuildSpec,
+  LinuxBuildImage,
+  PipelineProject
+} from '@aws-cdk/aws-codebuild'
 import { Secret } from '@aws-cdk/aws-secretsmanager'
 import { Vpc } from '@aws-cdk/aws-ec2'
 import { Cluster, ContainerImage } from '@aws-cdk/aws-ecs'
 import { LoadBalancedFargateService } from '@aws-cdk/aws-ecs-patterns'
 import { PolicyStatement, Role, ServicePrincipal } from '@aws-cdk/aws-iam'
-import { DockerImageAsset } from '@aws-cdk/assets-docker'
+import { DockerImageAsset } from '@aws-cdk/aws-ecr-assets'
 
 export interface StaticJekyllSiteProps extends StackProps {
   slug: string
@@ -58,10 +62,10 @@ export class StaticJekyllSite extends Construct {
     const fargate = new LoadBalancedFargateService(this, `${slug}-service`, {
       certificate: certificate,
       cluster: cluster,
-      cpu: '256',
+      cpu: 256,
       desiredCount: 1,
       image: ContainerImage.fromEcrRepository(image.repository),
-      memoryMiB: '512',
+      memoryLimitMiB: 512,
       publicLoadBalancer: true,
       domainName: props.subdomain,
       domainZone: zone
@@ -71,14 +75,14 @@ export class StaticJekyllSite extends Construct {
     const oauthSecret = Secret.fromSecretAttributes(this, 'github-token', {
       secretArn:
         'arn:aws:secretsmanager:us-east-1:112309987251:secret:github/token/schof-QNMMXm'
-    }).secretJsonValue('github-token-schof')
+    }).secretValueFromJson('github-token-schof')
 
     const sourceAction = new GitHubSourceAction({
       actionName: 'GitHub_Source',
       owner: 'mobileposse',
       repo: props.repo,
       branch: props.branch,
-      trigger: GitHubTrigger.WebHook,
+      trigger: GitHubTrigger.WEBHOOK,
       oauthToken: oauthSecret,
       output: sourceOutput
     })
@@ -93,7 +97,7 @@ export class StaticJekyllSite extends Construct {
           }
         }
       },
-      buildSpec: {
+      buildSpec: BuildSpec.fromObject({
         version: '0.2',
         phases: {
           pre_build: {
@@ -122,7 +126,7 @@ export class StaticJekyllSite extends Construct {
         artifacts: {
           files: 'imagedefinitions.json'
         }
-      }
+      })
     })
 
     // needed for docker push
@@ -133,7 +137,7 @@ export class StaticJekyllSite extends Construct {
       actionName: 'CodeBuild',
       project,
       input: sourceOutput,
-      output: buildOutput
+      outputs: [buildOutput]
     })
 
     const deployAction = new EcsDeployAction({
@@ -146,11 +150,11 @@ export class StaticJekyllSite extends Construct {
       assumedBy: new ServicePrincipal('codebuild.amazonaws.com')
     })
 
-    role.addToPolicy(
-      new PolicyStatement()
-        .addAllResources()
-        .addActions('cloudformation:GetTemplate')
-    )
+    const statement = new PolicyStatement({
+      actions: ['cloudformation:GetTemplate']
+    })
+    statement.addAllResources()
+    role.addToPolicy(statement)
 
     const pipelineBucket = new AutoDeleteBucket(this, `${slug}-pipeline-bucket`)
 
@@ -158,15 +162,15 @@ export class StaticJekyllSite extends Construct {
       artifactBucket: pipelineBucket,
       stages: [
         {
-          name: 'Source',
+          stageName: 'Source',
           actions: [sourceAction]
         },
         {
-          name: 'Build',
+          stageName: 'Build',
           actions: [buildAction]
         },
         {
-          name: 'Deploy',
+          stageName: 'Deploy',
           actions: [deployAction]
         }
       ]
