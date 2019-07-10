@@ -81,3 +81,11 @@ Push the tagged source back up to Github
 ```
 git push --tags
 ```
+
+## Example Application
+
+The source includes an example site that you can test
+
+```
+yarn cdk deploy
+```
