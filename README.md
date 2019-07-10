@@ -66,14 +66,14 @@ This is actually a relatively simple use of CDK Constructs. There are no custom 
 Add npm user to your local machine (one time setup)
 
 ```
-npm adduser
+npm login
 ```
 
 Push the release (you will be asked the new version)
 
 ```
 yarn compile
-yarn publish
+npm publish
 ```
 
 Push the tagged source back up to Github

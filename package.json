@@ -1,6 +1,6 @@
 {
   "name": "static-jekyll-site",
-  "version": "1.0.6",
+  "version": "1.0.16",
   "description": "CDK Construct for generating a static site that can be updated automatically by AWS Code Pipeline",
   "main": "dist/src/resource/static-site.js",
   "types": "dist/src/resource/static-site.d.ts",
@@ -24,8 +24,7 @@
     "cdk:synth": "yarn compile && cdk synth",
     "cdk:deploy": "yarn compile && cdk deploy",
     "cdk:destroy": "yarn compile && cdk destroy",
-    "cdk:version": "yarn compile && cdk --version",
-    "publish": "yarn compile && npm publish"
+    "cdk:version": "yarn compile && cdk --version"
   },
   "author": "Sean Schofield",
   "license": "MIT",
@@ -57,13 +56,13 @@
     "@aws-cdk/cdk": "0.36.2"
   },
   "devDependencies": {
-    "@aws-cdk/aws-ecr-assets": "0.36.2",
     "@aws-cdk/aws-certificatemanager": "0.36.2",
     "@aws-cdk/aws-cloudfront": "0.36.2",
     "@aws-cdk/aws-codebuild": "0.36.2",
     "@aws-cdk/aws-codepipeline": "0.36.2",
     "@aws-cdk/aws-codepipeline-actions": "0.36.2",
     "@aws-cdk/aws-ec2": "0.36.2",
+    "@aws-cdk/aws-ecr-assets": "0.36.2",
     "@aws-cdk/aws-ecs": "0.36.2",
     "@aws-cdk/aws-ecs-patterns": "0.36.2",
     "@aws-cdk/aws-elasticloadbalancingv2": "0.36.2",
