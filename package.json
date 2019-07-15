@@ -24,7 +24,10 @@
     "cdk:synth": "yarn compile && cdk synth",
     "cdk:deploy": "yarn compile && cdk deploy",
     "cdk:destroy": "yarn compile && cdk destroy",
-    "cdk:version": "yarn compile && cdk --version"
+    "cdk:version": "yarn compile && cdk --version",
+    "docker:run": "docker pull mobileposse/jekyll && docker run -e SYSTEM=development -p 80:80 -v=$PWD/example/docs:/jekyll/src -it mobileposse/jekyll:latest",
+    "docker:bash": "yarn docker:run /bin/bash",
+    "jekyll": "yarn docker:run bin/entry-point.sh"
   },
   "author": "Sean Schofield",
   "license": "MIT",
