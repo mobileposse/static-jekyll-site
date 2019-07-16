@@ -22,7 +22,10 @@ export class ExampleStack extends Stack {
         'arn:aws:acm:us-east-1:112309987251:certificate/cd84e259-e8e5-4aca-a6e9-a5b7bb8e8ba0',
       repo: 'static-jekyll-site',
       branch: 'master',
-      image: image
+      image: image,
+      secretArn:
+        'arn:aws:secretsmanager:us-east-1:112309987251:secret:github/token/schof-QNMMXm',
+      secretKey: 'github-token-schof'
     })
   }
 }

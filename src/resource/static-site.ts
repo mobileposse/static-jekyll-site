@@ -30,6 +30,8 @@ export interface StaticJekyllSiteProps extends StackProps {
   repo: string
   branch: string
   image: DockerImageAsset
+  secretArn: string
+  secretKey: string
 }
 
 export class StaticJekyllSite extends Construct {
@@ -73,9 +75,8 @@ export class StaticJekyllSite extends Construct {
 
     const sourceOutput = new Artifact('SourceOutput')
     const oauthSecret = Secret.fromSecretAttributes(this, 'github-token', {
-      secretArn:
-        'arn:aws:secretsmanager:us-east-1:112309987251:secret:github/token/schof-QNMMXm'
-    }).secretValueFromJson('github-token-schof')
+      secretArn: props.secretArn
+    }).secretValueFromJson(props.secretKey)
 
     const sourceAction = new GitHubSourceAction({
       actionName: 'GitHub_Source',
