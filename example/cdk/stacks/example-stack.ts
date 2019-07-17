@@ -15,16 +15,16 @@ export class ExampleStack extends Stack {
 
     new StaticJekyllSite(this, 'example-site', {
       slug: slug,
-      tld: 'mobileposse.com',
-      subdomain: 'example.mobileposse.com',
-      zoneid: 'ZXK70TKQ5GQBE',
+      tld: 'devsandbox.mobi',
+      subdomain: 'example.devsandbox.mobi',
+      zoneid: 'ZGWO347RHQLF0',
       ssl:
-        'arn:aws:acm:us-east-1:112309987251:certificate/cd84e259-e8e5-4aca-a6e9-a5b7bb8e8ba0',
+        'arn:aws:acm:us-east-1:185354281374:certificate/bdec749f-766f-4884-b034-c4bfd5436a5f',
       repo: 'static-jekyll-site',
       branch: 'master',
       image: image,
       secretArn:
-        'arn:aws:secretsmanager:us-east-1:112309987251:secret:github/token/schof-QNMMXm',
+        'arn:aws:secretsmanager:us-east-1:185354281374:secret:github-token-schof-e8sy1N',
       secretKey: 'github-token-schof'
     })
   }
