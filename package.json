@@ -1,6 +1,6 @@
 {
   "name": "static-jekyll-site",
-  "version": "1.0.17",
+  "version": "1.1.0",
   "description": "CDK Construct for generating a static site that can be updated automatically by AWS Code Pipeline",
   "main": "dist/src/resource/static-site.js",
   "types": "dist/src/resource/static-site.d.ts",
