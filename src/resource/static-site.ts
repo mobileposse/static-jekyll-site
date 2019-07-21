@@ -1,7 +1,7 @@
 import { Construct, StackProps } from '@aws-cdk/core'
 import { HostedZone } from '@aws-cdk/aws-route53'
 import { Certificate } from '@aws-cdk/aws-certificatemanager'
-import { AutoDeleteBucket } from 'auto-delete-bucket'
+import { AutoDeleteBucket } from '@mobileposse/auto-delete-bucket'
 import { Artifact, Pipeline } from '@aws-cdk/aws-codepipeline'
 import {
   GitHubSourceAction,
@@ -43,7 +43,7 @@ export class StaticJekyllSite extends Construct {
     const image = props.image
 
     const vpc = new Vpc(this, `${slug}-vpc`, {
-      maxAZs: 2 // Default is all AZs in region
+      maxAzs: 2 // Default is all AZs in region
     })
 
     const cluster = new Cluster(this, `${slug}-cluster`, {
