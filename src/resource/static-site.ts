@@ -17,7 +17,7 @@ import {
 import { Secret } from '@aws-cdk/aws-secretsmanager'
 import { Vpc } from '@aws-cdk/aws-ec2'
 import { Cluster, ContainerImage } from '@aws-cdk/aws-ecs'
-import { LoadBalancedFargateService } from '@aws-cdk/aws-ecs-patterns'
+import { ApplicationLoadBalancedFargateService } from '@aws-cdk/aws-ecs-patterns'
 import { PolicyStatement, Role, ServicePrincipal } from '@aws-cdk/aws-iam'
 import { DockerImageAsset } from '@aws-cdk/aws-ecr-assets'
 
@@ -61,17 +61,21 @@ export class StaticJekyllSite extends Construct {
       hostedZoneId: props.zoneid
     })
 
-    const fargate = new LoadBalancedFargateService(this, `${slug}-service`, {
-      certificate: certificate,
-      cluster: cluster,
-      cpu: 256,
-      desiredCount: 1,
-      image: ContainerImage.fromEcrRepository(image.repository),
-      memoryLimitMiB: 512,
-      publicLoadBalancer: true,
-      domainName: props.subdomain,
-      domainZone: zone
-    })
+    const fargate = new ApplicationLoadBalancedFargateService(
+      this,
+      `${slug}-service`,
+      {
+        certificate: certificate,
+        cluster: cluster,
+        cpu: 256,
+        desiredCount: 1,
+        image: ContainerImage.fromEcrRepository(image.repository),
+        memoryLimitMiB: 512,
+        publicLoadBalancer: true,
+        domainName: props.subdomain,
+        domainZone: zone
+      }
+    )
 
     const sourceOutput = new Artifact('SourceOutput')
     const oauthSecret = Secret.fromSecretAttributes(this, 'github-token', {
