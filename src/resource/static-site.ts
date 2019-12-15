@@ -69,11 +69,13 @@ export class StaticJekyllSite extends Construct {
         cluster: cluster,
         cpu: 256,
         desiredCount: 1,
-        image: ContainerImage.fromEcrRepository(image.repository),
         memoryLimitMiB: 512,
         publicLoadBalancer: true,
         domainName: props.subdomain,
-        domainZone: zone
+        domainZone: zone,
+        taskImageOptions: {
+          image: ContainerImage.fromRegistry(image.repository.repositoryName)
+        }
       }
     )
 

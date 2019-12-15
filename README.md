@@ -61,6 +61,22 @@ We have several internal and external sites that all need to be updated automati
 
 This is actually a relatively simple use of CDK Constructs. There are no custom resources involved, just a single, reusable Construct that can be shared across proejcts.
 
+## Building the Example Stack
+
+The source code includes a reference CDK project inside the `example` directory which consists of a single `static-jekyll-site`.
+
+You can build the stack with:
+
+```
+yarn cdk:deploy
+```
+
+And you can destroy it with:
+
+```
+yarn cdk:destroy
+```
+
 ## Publish to NPM (Official maintainers only)
 
 Add npm user to your local machine (one time setup)
@@ -73,19 +89,12 @@ Push the release (you will be asked the new version)
 
 ```
 yarn compile
-npm publish
+npm publish --access public
 ```
 
 Push the tagged source back up to Github
 
 ```
+git tag -v [new version here]
 git push --tags
-```
-
-## Example Application
-
-The source includes an example site that you can test
-
-```
-yarn cdk deploy
 ```
